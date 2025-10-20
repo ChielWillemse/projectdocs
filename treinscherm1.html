@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vertrektijdenbord</title>
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #011C40;
+      --blue: #033E8C;
+      --white: #FFFFFF;
+      --white50: rgba(255,255,255,0.5);
+      --row-alt: rgba(255,255,255,0.07);
+      --vsep: rgba(255,255,255,0.15);
+      --delay: #FF4B00; /* oranje/rood voor vertraging */
+    }
+
+    body {
+      background-color: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+    }
+
+    .board {
+      width: 100%;
+      max-width: 3840px;
+    }
+
+    /* HEADER */
+    .board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .clock {
+      font-size: clamp(3rem, 8vw, 8rem);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .title {
+      text-align: right;
+    }
+
+    .title h1 {
+      font-size: clamp(1.5rem, 3vw, 3.5rem);
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .title span {
+      font-weight: 300;
+    }
+
+    /* TABLE HEADER */
+    .table-header {
+      background-color: var(--blue);
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 400;
+      padding: 0.8rem 1rem;
+      display: grid;
+      grid-template-columns: 8% 4px 55% 4px 20% 4px 8%;
+      align-items: center;
+    }
+
+    .table-header .hdr-strong {
+      font-weight: 700;
+    }
+
+    /* ROWS */
+    .row-line {
+      display: grid;
+      grid-template-columns: 8% 4px 55% 4px 20% 4px 8%;
+      align-items: center;
+      font-size: 1.5rem;
+      padding: 0.6rem 1rem;
+    }
+
+    .row-line:nth-child(even) {
+      background-color: var(--row-alt);
+    }
+
+    /* VERTICAL STROKES */
+    .vsep {
+      width: 4px;
+      height: 60%;
+      background-color: var(--vsep);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* TEXT STYLES */
+    .type {
+      font-weight: 400;
+      text-align: left;
+    }
+
+    .dest {
+      font-weight: 700;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .dest-sub {
+      font-weight: 400;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .time {
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .delay {
+      color: var(--delay);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-left: 0.5rem;
+    }
+
+    .platform {
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* RESPONSIVE SPACING */
+    @media (max-width: 992px) {
+      .table-header, .row-line {
+        grid-template-columns: 12% 4px 48% 4px 24% 4px 12%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .table-header, .row-line {
+        grid-template-columns: 15% 4px 45% 4px 25% 4px 11%;
+        font-size: 1rem;
+      }
+
+      .clock {
+        font-size: 3rem;
+      }
+
+      .dest-sub {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="board container-fluid">
+    <!-- HEADER -->
+    <div class="board-header">
+      <div class="clock" id="clock">09:41</div>
+      <div class="title">
+        <h1>VERTREKTIJDEN <span>/ DEPARTURE TIMES / HEURES DE DÉPART</span></h1>
+      </div>
+    </div>
+
+    <!-- TABLE HEADER -->
+    <div class="table-header">
+      <div class="type">Type</div>
+      <div class="vsep"></div>
+      <div class="dest"><span class="hdr-strong">Bestemming</span> / Destination</div>
+      <div class="vsep"></div>
+      <div class="time">Vertrek / Departure</div>
+      <div class="vsep"></div>
+      <div class="platform">Platform</div>
+    </div>
+
+    <!-- ROWS -->
+    <div class="row-line">
+      <div class="type">IC24</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Antwerpen-Centraal</strong><span class="dest-sub">/ Antwerp-Central</span></div>
+      <div class="vsep"></div>
+      <div class="time">09:45</div>
+      <div class="vsep"></div>
+      <div class="platform">4</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC34</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Noorderkempen</strong></div>
+      <div class="vsep"></div>
+      <div class="time">10:00<span class="delay">+5</span></div>
+      <div class="vsep"></div>
+      <div class="platform">3</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC56</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Antwerpen Luchtbal</strong></div>
+      <div class="vsep"></div>
+      <div class="time">10:05</div>
+      <div class="vsep"></div>
+      <div class="platform">2</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC45</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Breda</strong></div>
+      <div class="vsep"></div>
+      <div class="time">10:10</div>
+      <div class="vsep"></div>
+      <div class="platform">3</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC09</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Gent-Sint-Pieters</strong><span class="dest-sub">/ Ghent-Saint-Peter's</span></div>
+      <div class="vsep"></div>
+      <div class="time">10:20<span class="delay">+2</span></div>
+      <div class="vsep"></div>
+      <div class="platform">2</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC87</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Brugge</strong><span class="dest-sub">/ Bruges</span></div>
+      <div class="vsep"></div>
+      <div class="time">10:30</div>
+      <div class="vsep"></div>
+      <div class="platform">1</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC24</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Antwerpen-Centraal</strong><span class="dest-sub">/ Antwerp-Central</span></div>
+      <div class="vsep"></div>
+      <div class="time">10:45<span class="delay">+10</span></div>
+      <div class="vsep"></div>
+      <div class="platform">4</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC34</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Noorderkempen</strong></div>
+      <div class="vsep"></div>
+      <div class="time">11:00</div>
+      <div class="vsep"></div>
+      <div class="platform">3</div>
+    </div>
+
+    <div class="row-line">
+      <div class="type">IC56</div>
+      <div class="vsep"></div>
+      <div class="dest"><strong>Antwerpen Luchtbal</strong></div>
+      <div class="vsep"></div>
+      <div class="time">11:05</div>
+      <div class="vsep"></div>
+      <div class="platform">2</div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- LIVE CLOCK -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000 * 30); // update elke 30 seconden
+  </script>
+</body>
+</html>
