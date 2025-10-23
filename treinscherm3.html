@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Treinscherm mockup</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet" />
+
+  <style>
+    :root{
+      --dark:#011C40;    /* donkerblauw */
+      --blue:#033E8C;    /* blauw */
+      --white:#FFFFFF;
+      --white-50: rgba(255,255,255,0.5);
+      --fw-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+
+    /* Page */
+    html,body{height:100%;margin:0;background:var(--dark);font-family:var(--fw-sans);color:var(--white);}
+    .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;}
+
+    /* Card that holds the mockup - responsive full width */
+    .mock {
+      width:100%;
+      max-width:3840px;
+      background:var(--dark);
+      box-sizing:border-box;
+      /* Remove horizontal padding, apply vertical padding */
+      padding: 1.5rem 0;
+      position:relative;
+      overflow-x: hidden; /* Prevent horizontal scroll from negative margins */
+    }
+
+    /* Add a class for content that needs padding */
+    .padded-content {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Top bar */
+    .top-left .code { color:var(--white-50); font-weight:700; font-size:clamp(14px,1.6vw,32px); }
+    .top-left .title { font-weight:700; font-size:clamp(28px,2.6vw,64px); color:var(--white); line-height:1; }
+    .top-left .subtitle { color:var(--white-50); font-size:clamp(12px,1.0vw,20px); }
+    .clock {
+      text-align:right;
+      font-weight:700;
+      font-size:clamp(28px,3.6vw,96px);
+      color:var(--white);
+      letter-spacing:1px;
+    }
+
+    /* Via strip */
+    .via-strip {
+      background:var(--blue);
+      color:var(--white);
+      padding:.6rem 1rem;
+      font-weight:700;
+      margin-top:0.8rem;
+      /* border-radius:4px; */
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      font-size:clamp(14px,1.6vw,44px);
+    }
+    .via-strip .muted { color:var(--white-50); font-weight:700; font-size:clamp(12px,1.0vw,30px); }
+
+    /* Timeline / stations */
+    .stations-row { margin-top:1.6rem; }
+    .station-name { font-weight:700; font-size:clamp(24px,2.6vw,72px); text-align:center; color:var(--white); }
+    .station-sub { text-align:center; color:var(--white-50); font-weight:300; font-size:clamp(12px,1.0vw,28px); }
+
+    /* route track */
+    .route-wrap {
+      position: relative;
+      margin-top: 1rem;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+    }
+    .route-line {
+      height:10px;
+      background:var(--white-50);
+      border-radius:10px;
+      position:relative;
+      width: 100%;
+    }
+    .route-progress {
+      position:absolute; left:0; top:0; bottom:0; width:15%; background:var(--blue); border-radius:10px;
+    }
+    .stop {
+      position:absolute;
+      width: clamp(30px, 2vw, 40px);
+      height: clamp(30px, 2vw, 40px);
+      border-radius:50%;
+      background:var(--white);
+      transform:translate(-50%,-50%);
+      top:50%;
+      box-shadow:0 0 0 8px var(--dark);
+    }
+    .stop.is-past {
+        background-color: var(--blue);
+    }
+    /* stops positions (percentages across route-wrap) */
+    .stop.s-a{left:8%;}
+    .stop.s-b{left:37%;}
+    .stop.s-c{left:64%;}
+    .stop.s-d{left:90%;}
+    .route-arrow {
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(32px, 4vw, 72px);
+      color: var(--white);
+    }
+
+    /* times row */
+    .times .arrival { font-weight:700; font-size:clamp(20px,2.6vw,72px); color:var(--white); margin-bottom:.6rem; text-align:center; }
+    .times .platform { font-weight:700; font-size:clamp(14px,1.4vw,40px); color:var(--white-50); text-align:center; }
+
+    /* carriages */
+    .carriage-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .carriage-label {
+      font-weight: 700;
+      font-size: clamp(20px, 2.6vw, 72px);
+      color: var(--white);
+    }
+    .carriage-card {
+      background:var(--white); color:var(--dark); border-radius:6px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width: 100%;
+      height: clamp(80px, 8vw, 180px);
+    }
+    .carriage-number {
+      font-weight: 700;
+      font-size: clamp(24px, 4vw, 72px);
+      line-height: 1;
+    }
+    .carriage-class { font-weight:700; font-size:clamp(18px,2.4vw,54px); }
+
+    .carriage-wrapper > .material-symbols-outlined {
+        font-size: clamp(40px, 5vw, 84px);
+    }
+
+    /* icons row */
+    .icons-row .material-symbols-outlined { font-variation-settings: 'wght' 400; font-size:clamp(28px,3.8vw,84px); color:var(--white); }
+
+    /* footer */
+    .footer-bar { height:72px; background:var(--blue); margin-top:1.2rem; /* border-radius:4px; */ }
+
+    /* small screens adjustments */
+    @media (max-width:767px){
+      .stop { width:44px; height:44px; box-shadow:0 0 0 6px var(--dark); }
+      .route-line{height:10px;}
+      .carriage-card{height:160px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="mock container-fluid">
+      <!-- Top row -->
+      <div class="row align-items-center padded-content">
+        <div class="col-12 col-lg-9 d-flex align-items-center gap-3 top-left">
+          <div class="code">IC24</div>
+          <div>
+            <div class="title">Antwerpen-Centraal</div>
+            <div class="subtitle">Antwerp-Central</div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3">
+          <div id="clock" class="clock"></div>
+        </div>
+      </div>
+
+      <!-- Via strip -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="via-strip">
+            <div class="muted" style="padding-left: 1.5rem;">Via</div>
+            <div>Breda, Noorderkempen, Antwerpen Luchtbal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stations names -->
+      <div class="row stations-row gx-3 gy-3 padded-content">
+        <div class="col-6 col-md-3">
+          <div class="station-name">Breda</div>
+          <div class="station-sub">&nbsp;</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="station-name">Noorderkempen</div>
+          <div class="station-sub">Volgend station</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="station-name">Antwerpen Luchtbal</div>
+          <div class="station-sub">&nbsp;</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="station-name">Antwerpen Centraal</div>
+          <div class="station-sub">Eindstation</div>
+        </div>
+      </div>
+
+      <!-- Route graphic -->
+      <div class="route-wrap padded-content">
+        <div class="route-line">
+          <div class="route-progress"></div>
+        </div>
+        <div class="stop s-a is-past" title="Breda"></div>
+        <div class="stop s-b" title="Noorderkempen"></div>
+        <div class="stop s-c" title="Antwerpen Luchtbal"></div>
+        <div class="stop s-d" title="Antwerpen Centraal"></div>
+        <div class="route-arrow">→</div>
+      </div>
+
+      <!-- Times and platforms -->
+      <div class="row times gx-4 gy-3 mt-3 padded-content">
+        <div class="col-3 d-flex flex-column align-items-center">
+            <!-- This column is for Breda, which has no time displayed in this view -->
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+          <div class="arrival">Aankomst<br><span style="font-size:clamp(18px,2.8vw,72px)">09:50 <span style="font-size:clamp(12px,1.2vw,36px); color:var(--white-50)">+1</span></span></div>
+          <div class="platform">Platform 1</div>
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+          <div class="arrival">10:05</div>
+          <div class="platform">Platform 1</div>
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+          <div class="arrival">10:10</div>
+          <div class="platform">Platform 15</div>
+        </div>
+      </div>
+
+      <!-- Carriages -->
+      <div class="row align-items-start gx-2 gx-md-3 gy-3 mt-4 padded-content">
+        <div class="col-10">
+            <div class="row">
+                <!-- Carriage 1 -->
+                <div class="col-2">
+                    <div class="carriage-wrapper">
+                        <div class="carriage-label">1</div>
+                        <div class="carriage-card">
+                            <div class="carriage-number">2e</div>
+                        </div>
+                        <span class="material-symbols-outlined mt-2">smoking_rooms</span>
+                    </div>
+                </div>
+                <!-- Carriage 2 -->
+                <div class="col-2">
+                    <div class="carriage-wrapper">
+                        <div class="carriage-label">2</div>
+                        <div class="carriage-card">
+                            <div class="carriage-number">2e</div>
+                        </div>
+                        <span class="material-symbols-outlined mt-2">volume_off</span>
+                    </div>
+                </div>
+                <!-- Carriage 3 -->
+                <div class="col-2">
+                    <div class="carriage-wrapper">
+                        <div class="carriage-label">3</div>
+                        <div class="carriage-card">
+                            <div class="carriage-number">1e</div>
+                        </div>
+                        <span class="material-symbols-outlined mt-2">wc</span>
+                    </div>
+                </div>
+                <!-- Carriage 4 -->
+                <div class="col-2">
+                    <div class="carriage-wrapper">
+                        <div class="carriage-label">4</div>
+                        <div class="carriage-card">
+                            <div class="carriage-number">2e</div>
+                        </div>
+                        <span class="material-symbols-outlined mt-2">directions_bike</span>
+                    </div>
+                </div>
+                <!-- Carriage 5 -->
+                <div class="col-2">
+                    <div class="carriage-wrapper">
+                        <div class="carriage-label">5</div>
+                        <div class="carriage-card">
+                            <div class="carriage-number">2e</div>
+                        </div>
+                        <span class="material-symbols-outlined mt-2">wc</span>
+                    </div>
+                </div>
+                <!-- Carriage 6 -->
+                <div class="col-2">
+                    <div class="carriage-wrapper">
+                        <div class="carriage-label">6</div>
+                        <div class="carriage-card">
+                            <div class="carriage-number">2e</div>
+                        </div>
+                        <span class="material-symbols-outlined mt-2">accessible</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="carriage-wrapper">
+                <div class="carriage-label" style="opacity: 0;">&nbsp;</div>
+                <div class="carriage-card" style="background: transparent; border: none; box-shadow: none;">
+                    <span class="material-symbols-outlined" style="font-size: clamp(60px, 10vw, 140px); color: var(--white);">train</span>
+                </div>
+                <span class="material-symbols-outlined mt-2" style="opacity: 0;">accessible</span>
+            </div>
+        </div>
+      </div>
+
+      <!-- Icons row -->
+      <div class="row mt-3 d-none">
+        <div class="col-auto">
+          <span class="material-symbols-outlined">smoking_rooms</span>
+        </div>
+        <div class="col-auto">
+          <span class="material-symbols-outlined">volume_off</span>
+        </div>
+        <div class="col-auto">
+          <span class="material-symbols-outlined">wc</span>
+        </div>
+        <div class="col-auto">
+          <span class="material-symbols-outlined">directions_bike</span>
+        </div>
+        <div class="col-auto">
+          <span class="material-symbols-outlined">wc</span>
+        </div>
+        <div class="col-auto">
+          <span class="material-symbols-outlined">accessible</span>
+        </div>
+      </div>
+
+      <div class="footer-bar mt-4"></div>
+    </div>
+  </div>
+
+  <script>
+    // Live clock (HH:MM)
+    function updateClock(){
+      const el = document.getElementById('clock');
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      el.textContent = hh + ':' + mm;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

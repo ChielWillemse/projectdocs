@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reisinfo - Mockup</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Inter font (300,400,700) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Kleuren */
+    :root{
+      --dark-blue: #011C40;
+      --blue: #033E8C;
+      --white-50: rgba(255,255,255,0.5);
+      --white: #FFFFFF;
+    }
+
+    /* Canvas in exact pixelafmeting */
+    body{
+      background: #ffffff;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* wrapper heeft vaste ontwerpafmetingen en wordt geschaald door JS */
+    .screen {
+      width: 1080px;
+      height: 1920px;
+      background: linear-gradient(180deg, #011b3a 0%, #011C40 100%);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      transform-origin: top left;
+      position: relative;
+    }
+
+    /* Top header: klok links, platform blok rechts */
+    .top {
+      display: flex;
+      height: 320px;
+    }
+    .clock-block {
+      background: var(--dark-blue);
+      flex: 1; /* gelijk deel van de bovenste rij */
+      display: flex;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+    }
+    .clock {
+      color: var(--white);
+      font-weight:700;
+      font-size: 140px;
+      letter-spacing: -4px;
+      line-height: 1;
+    }
+    .platform-block {
+      background: var(--blue);
+      flex: 1;
+      display: flex;
+       flex-direction:column;
+       align-items:center;
+       justify-content:center;
+       color: var(--white);
+       padding: 20px;
+     }
+    .platform-label {
+      font-size: 44px;
+      font-weight:300;
+      opacity: 0.95;
+      margin-bottom: 8px;
+    }
+    .platform-number {
+      font-size: 220px;
+      font-weight:700;
+      line-height: .9;
+    }
+
+    /* List entries */
+    .list {
+      background: var(--dark-blue);
+      padding: 0;
+      margin: 0;
+      height: calc(100% - 320px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .item {
+      color: var(--white);
+      border-bottom: 6px solid var(--blue);
+      padding: 22px 36px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .item .time {
+      font-size: 44px;
+      font-weight:300;
+      color: var(--white); /* volledig wit */
+      margin-bottom: 6px;
+    }
+
+    .item .main {
+      font-size: 64px;
+      font-weight:700;
+      color: var(--white);
+      letter-spacing: -1px;
+    }
+
+    .item .sub {
+      font-size: 36px;
+      font-weight:300;
+      margin-top: 8px;
+      color: var(--white);
+      opacity: 0.95;
+    }
+
+    .item .code {
+      font-size: 48px;
+      font-weight:400;
+      color: var(--white);
+      align-self: start;
+      padding-left: 12px;
+    }
+
+    /* Light overlay repeated rows (de tint in jouw plaatje) */
+    .item.alt {
+      background: rgba(255,255,255,0.06); /* subtle lighter band */
+    }
+
+    /* Extra info bar */
+    .extra {
+      background: var(--blue);
+      color: var(--white);
+      font-size: 22px;
+      padding: 8px 16px;
+      font-weight:300;
+    }
+
+    /* Responsieve aanpassingen intern in de canvas (voor kleinere schermen / scaling) */
+    .clock { font-size: 120px; }
+    .platform-number { font-size: 180px; }
+    .item .main { font-size: 56px; }
+    .item .sub { font-size: 32px; }
+    .item .time { font-size: 40px; }
+    .item .code { font-size: 44px; }
+
+    /* klein scherm binnen canvas */
+    @media (max-width: 600px) {
+      .clock { font-size: 90px; }
+      .platform-number { font-size: 120px; }
+      .item .main { font-size: 44px; }
+    }
+
+    /* scroll bar styling (optioneel) */
+    .list::-webkit-scrollbar { width: 12px; }
+    .list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div id="canvasWrap" class="screen">
+    <!-- Top header -->
+    <div class="top">
+      <div class="clock-block">
+        <div class="clock" id="clock">09:41</div>
+      </div>
+      <div class="platform-block">
+        <div class="platform-label">Platform</div>
+        <div class="platform-number">3</div>
+      </div>
+    </div>
+
+    <!-- List of items -->
+    <div class="list" id="list">
+      <!-- We'll output a few repeating items to mimic the screenshot -->
+      <div class="item">
+        <div>
+          <div class="time">00:00</div>
+          <div class="main">Bestemming<span style="font-weight:400">/Destination</span></div>
+          <div class="sub">Via: Tussenstops</div>
+        </div>
+        <div class="code">IC25</div>
+      </div>
+      <div class="extra">Extra info (loopt door)</div>
+
+      <div class="item alt">
+        <div>
+          <div class="time">00:00</div>
+          <div class="main">Bestemming<span style="font-weight:400">/Destination</span></div>
+          <div class="sub">Via: Tussenstops</div>
+        </div>
+        <div class="code">IC25</div>
+      </div>
+      <div class="extra">Extra info (loopt door)</div>
+
+      <div class="item">
+        <div>
+          <div class="time">00:00</div>
+          <div class="main">Bestemming<span style="font-weight:400">/Destination</span></div>
+          <div class="sub">Via: Tussenstops</div>
+        </div>
+        <div class="code">IC25</div>
+      </div>
+      <div class="extra">Extra info (loopt door)</div>
+
+      <div class="item alt">
+        <div>
+          <div class="time">00:00</div>
+          <div class="main">Bestemming<span style="font-weight:400">/Destination</span></div>
+          <div class="sub">Via: Tussenstops</div>
+        </div>
+        <div class="code">IC25</div>
+      </div>
+      <div class="extra">Extra info (loopt door)</div>
+
+      <div class="item">
+        <div>
+          <div class="time">00:00</div>
+          <div class="main">Bestemming<span style="font-weight:400">/Destination</span></div>
+          <div class="sub">Via: Tussenstops</div>
+        </div>
+        <div class="code">IC25</div>
+      </div>
+      <div class="extra">Extra info (loopt door)</div>
+
+      <!-- extra repeated rows to enable scrolling -->
+      <div style="height:40px"></div>
+    </div>
+  </div>
+
+  <!-- JS: klok & schaal -->
+  <script>
+    // Klok (update per seconde)
+    function updateClock(){
+      const el = document.getElementById('clock');
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      el.textContent = hh + ':' + mm;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Schaal de .screen naar beschikbare viewport zodat 1080x1920 past
+    function scaleCanvas(){
+      const wrap = document.getElementById('canvasWrap');
+      const vw = window.innerWidth - 32; // wat padding
+      const vh = window.innerHeight - 32;
+      const scale = Math.min(vw / 1080, vh / 1920, 1);
+      wrap.style.transform = 'scale(' + scale + ')';
+      // centreren: we gebruiken transform-origin top-left, dus zet margin-left/top voor centering
+      const newW = 1080 * scale;
+      const newH = 1920 * scale;
+      const left = Math.max( (window.innerWidth - newW) / 2, 0 );
+      const top = Math.max( (window.innerHeight - newH) / 2, 0 );
+      wrap.style.position = 'absolute';
+      wrap.style.left = left + 'px';
+      wrap.style.top = top + 'px';
+    }
+
+    window.addEventListener('resize', scaleCanvas);
+    window.addEventListener('orientationchange', scaleCanvas);
+    scaleCanvas();
+  </script>
+</body>
+</html>
