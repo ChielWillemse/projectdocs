@@ -1,0 +1,67 @@
+/* Algemene stijlen */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    color: #63d866;
+}
+
+body {
+    background-color: #000;
+    color: #63d866;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Koppen */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Paragraaf */
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Navigatie */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #63d866;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color:white;
+}
